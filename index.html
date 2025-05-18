@@ -1,2 +1,614 @@
-Robosora:Are Video Generation Models Fully Explored for Vision-Language-Action Models?
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="RoboSora: Are Video Generation Models Fully Explored for Vision-Language-Action Models? video generation model for VLA model in clavin dataset">
+  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RoboSora: Are Video Generation Models Fully Explored for Vision-Language-Action Models?</title>
 
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://keunhong.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">RoboSora:Are Video Generation Models Fully Explored for Vision-Language-Action Models?</h1>
+          <!-- <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://keunhong.com">Keunhong Park</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://utkarshsinha.com">Utkarsh Sinha</a><sup>2</sup>,</span>
+            <span class="author-block">
+              <a href="https://jonbarron.info">Jonathan T. Barron</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="http://sofienbouaziz.com">Sofien Bouaziz</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.danbgoldman.com">Dan B Goldman</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://homes.cs.washington.edu/~seitz/">Steven M. Seitz</a><sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="http://www.ricardomartinbrualla.com">Ricardo Martin-Brualla</a><sup>2</sup>
+            </span>
+          </div> -->
+<!-- 
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Washington,</span>
+            <span class="author-block"><sup>2</sup>Google Research</span>
+          </div> -->
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <!-- <span class="link-block">
+                <a href="https://arxiv.org/pdf/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span> -->
+              <!-- Video Link. -->
+              <!-- <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code(coming soon)</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://github.com/mees/calvin"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/16-0-push_red_block_left-succ.mp4"
+                type="video/mp4">
+      </video>
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/16-1-lift_pink_block_slider-succ.mp4"
+                type="video/mp4">
+      </video>
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/16-2-stack_block-succ.mp4"
+                type="video/mp4">
+      </video>
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/16-3-turn_off_led-succ.mp4"
+                type="video/mp4">
+      </video>
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/16-4-open_drawer-succ.mp4"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        <span class="dnerf">Nerfies</span> turns selfie videos from your phone into
+        free-viewpoint
+        portraits.
+      </h2>
+    </div>
+  </div>
+</section> -->
+
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+
+      <div class="video-row">
+
+        <div class="video-item">
+          <video autoplay muted loop playsinline>
+            <source src="./static/videos/16-0-push_red_block_left-succ.mp4" type="video/mp4">
+          </video>
+          <p class="video-caption">Push red block left</p>
+        </div>
+      
+        <div class="video-item">
+          <video autoplay muted loop playsinline>
+            <source src="./static/videos/16-1-lift_pink_block_slider-succ.mp4" type="video/mp4">
+          </video>
+          <p class="video-caption">Lift pink block</p>
+        </div>
+      
+        <div class="video-item">
+          <video autoplay muted loop playsinline>
+            <source src="./static/videos/16-2-stack_block-succ.mp4" type="video/mp4">
+          </video>
+          <p class="video-caption">Stack block</p>
+        </div>
+      
+        <div class="video-item">
+          <video autoplay muted loop playsinline>
+            <source src="./static/videos/16-3-turn_off_led-succ.mp4" type="video/mp4">
+          </video>
+          <p class="video-caption">Turn off LED</p>
+        </div>
+      
+        <div class="video-item">
+          <video autoplay muted loop playsinline>
+            <source src="./static/videos/16-4-open_drawer-succ.mp4" type="video/mp4">
+          </video>
+          <p class="video-caption">Open drawer</p>
+        </div>
+      
+      </div>
+
+      <h2 class="subtitle has-text-centered">
+        <span class="dnerf">RoboSora in Calvin: </span> Test performance on a five-task consecutive sequence in the Calvin Benchmark.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/16-0-combined.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/16-1-combined.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/16-2-combined.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/16-3-combined.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-blueshirt">
+          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/16-4-combined.mp4"
+                    type="video/mp4">
+          </video>
+      </div>
+    </div>
+    <p class="has-text-centered"></p>
+      <span style="color:red;">Left: real robot execution. Right: video generated by Sora.</span> 
+      The high-quality videos generated by Sora and the effectiveness of our execution policy in grounding them highlight the strength of our approach.
+    </p>
+  </div>
+</section>
+
+
+<section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              In the domain of robot control, most existing methods generate future actions by 
+              integrating observable multimodal information into Vision-Language-Action (VLA) models. 
+              Many recent high-performing methods enhance this framework by introducing predicted future 
+              images as auxiliary guidance. However, the role of video generation in this context remains underexplored. 
+              In this work, we decouple video generation from policy learning and conduct detailed analyses, leading to 
+              key insights and the conclusion: predicting future images is important for effective control. Based on this, 
+              we propose a novel architecture, Video Generation Visual-Language-Action (VGVLA), which optimizes video 
+              generation for control tasks. With a simple yet effective policy, VGVLA achieves strong performance. 
+              In our framework, the planner uses Sora to generate third-person future action videos, while the policy 
+              predicts accurate intermediate actions using only current third-person RGB images and generated future images. 
+              On the CALVIN ABC→D benchmark, our method improves performance by 31% and achieves an average sequence length 
+              of 4.31 on ABCD→D, setting a new state-of-the-art among RGB-only methods. These results validate our conclusions 
+              and highlight the potential of integrating video generation into VLA models for robot control.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--/ Abstract. -->
+  </div>
+</section>
+
+
+<!-- <section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Revisiting VGM-VLA</h2>
+
+          <div class="column is-half">
+            <h3 class="title is-5">Which matters more: the planner or the policy?</h3>
+            <div class="content has-text-justified">
+              <p>
+                High-level planning plays a more important role than low-level control.
+              </p>
+            </div>
+            <img src="./static/images/analysis.png" alt="Analysis image" width="40%">
+            <br/>
+          </div>
+
+          <div class="column is-half">
+            <h3 class="title is-5">How to design a better planner?</h3>
+            <div class="content has-text-justified">
+              <p>
+                A better planner requires better task abstraction and goal conditioning. Below is a summary of the core factors:
+              </p>
+            </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
+</section> -->
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    
+    <!-- 整行大标题 -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Revisiting VGM-VLA</h2>
+      </div>
+    </div>
+
+    <!-- 两栏内容 -->
+    <div class="columns">
+
+      <!-- 左栏：Which matters more -->
+      <div class="column is-half">
+        <h3 class="title is-5">Which matters more: the planner or the policy?</h3>
+        <div class="content has-text-justified">
+          <p>
+            High-level planning plays a more important role than low-level control.
+          </p>
+        </div>
+        <img src="./static/images/analysis.png" alt="Analysis image" style="width: 100%;">
+      </div>
+
+      <!-- 右栏：How to design a better planner -->
+      <div class="column is-half">
+        <h3 class="title is-5">How to design a better planner?</h3>
+        <div class="content has-text-justified">
+          <p>
+            With an accurate policy, emphasizing temporal consistency during both training and inference in planner is crucial for success.
+          </p>
+        </div>
+        <img src="./static/images/table2.png" alt="Analysis image" style="width: 100%;">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <!-- <div class="columns is-centered"> -->
+        <div class="column is-full-width">
+          <h2 class="title is-3">Model Architecture</h2>
+
+          <img src="./static/images/model.png" alt="model image" width="90%">
+        </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Experiment on Real world</h2>
+        </div>
+    </div>
+
+    <div class="hero-body">
+      <div class="content has-text-justified">
+        <div class="columns is-centered has-text-centered">
+          <p>
+            <span style="color:red;">Combined video { Left: real robot execution  |  Right: video generated by Sora.}</span>
+          </p>
+        </div>
+      </div>
+       
+      <!-- <video> -->
+      <div class="content has-text-justified">
+        <div class="columns is-centered has-text-centered">
+          <p>
+            Demonstration of Spatial Generalization: The robot successfully picks up the yellow block from different positions.
+            <br> 
+            Dataset: 200 episodes
+          </p>
+        </div>
+      </div>
+
+      <div class="video-row">
+
+        <div class="video-item-real">
+          <video autoplay muted loop playsinline width="400">
+            <source src="./static/videos/yellow0_combined_cut.mp4" type="video/mp4">
+          </video>
+        </div>
+        
+      
+        <div class="video-item-real">
+          <video autoplay muted loop playsinline width="400">
+            <source src="./static/videos/yellow1_combined.mp4" type="video/mp4">
+          </video>
+        </div>
+      
+        <div class="video-item-real">
+          <video autoplay muted loop playsinline width="400">
+            <source src="./static/videos/yellow2_combined_cut.mp4" type="video/mp4">
+          </video>
+        </div> 
+
+      </div>
+      <!-- <video> -->
+      
+      <!-- <video> -->
+      <br><br> 
+      <div class="content has-text-justified">
+        <div class="columns is-centered has-text-centered">
+          <p>
+            Demonstration of object Generalization: The robot successfully put different objects into the bowl. 
+            <br> 
+            Dataset: yellow duck: 50 episodes | yellow block: 200 episodes |  blue block: 50 episodes
+          </p>
+        </div>
+      </div>
+
+      <div class="video-row">
+
+        <div class="video-item-real">
+          <video autoplay muted loop playsinline width="400">
+            <source src="./static/videos/duck1_combined.mp4" type="video/mp4">
+          </video>
+        </div>
+        
+      
+        <div class="video-item-real">
+          <video autoplay muted loop playsinline width="400">
+            <source src="./static/videos/yellow0_combined_cut.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="video-item-real">
+          <video autoplay muted loop playsinline width="400">
+            <source src="./static/videos/blue_block_combined.mp4" type="video/mp4">
+          </video>
+        </div>
+
+      </div>
+      <!-- <video> -->
+      
+      
+      <!-- <video> -->
+      <br><br> 
+
+      
+      <div class="content has-text-justified">
+        <div class="columns is-centered has-text-centered">
+          
+          <p>
+            <span style="color:red;">Video captured by phone, played at 1x speed.</span>
+            <br> 
+            Demonstration of color Generalization: The robot successfully put different color blocks into the bowl. 
+            <br> 
+            Dataset: blue block: 50 episodes   | orange block: 200 episodes |  red block: 50 episodes
+            <br> 
+            Dataset: yellow block: 50 episodes | purple block: 200 episodes |  <span style="color:red;">green block: unseen</span>
+          </p>
+        </div>
+      </div>
+  
+      <div class="video-row">
+
+        <div class="video-item-real">
+          <video autoplay muted loop playsinline width="400">
+            <source src="./static/videos/blue_cut.mp4" type="video/mp4">
+          </video>
+        </div>
+        
+      
+        <div class="video-item-real">
+          <video autoplay muted loop playsinline width="400">
+            <source src="./static/videos/orange_cut.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="video-item-real">
+          <video autoplay muted loop playsinline width="400">
+            <source src="./static/videos/red_cut.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="video-item-real">
+          <video autoplay muted loop playsinline width="400">
+            <source src="./static/videos/yellow_cut.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="video-item-real">
+          <video autoplay muted loop playsinline width="400">
+            <source src="./static/videos/purple_cut.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="video-item-real">
+          <video autoplay muted loop playsinline width="400">
+            <source src="./static/videos/green_cut.mp4" type="video/mp4">
+          </video>
+        </div>
+  
+      </div>
+      <!-- <video> -->
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- <section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{park2021nerfies,
+  author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
+  title     = {Nerfies: Deformable Neural Radiance Fields},
+  journal   = {ICCV},
+  year      = {2021},
+}</code></pre>
+  </div>
+</section> -->
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <!-- <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a> -->
+      <!-- <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a> -->
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            Page template borrowed from <a
+              href="https://github.com/nerfies/nerfies.github.io">nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
